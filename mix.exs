@@ -3,7 +3,7 @@ defmodule DigestRequest.MixProject do
 
   def project do
     [
-      app: :digest_request,
+      app: :digex_request,
       version: "0.1.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
@@ -19,7 +19,6 @@ defmodule DigestRequest.MixProject do
   end
 
   defp deps do
-    [
-    ]
+    []
   end
 end
