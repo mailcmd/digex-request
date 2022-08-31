@@ -1,6 +1,6 @@
 # DigestRequest
 
-**TODO: Add description**
+A digest access authentication implementation for `Elixir`.
 
 ## Installation
 
@@ -10,7 +10,7 @@ by adding `digest_request` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:digest_request, "~> 0.1.0"}
+    {:digex_request, "~> 0.1.0"}
   ]
 end
 ```
