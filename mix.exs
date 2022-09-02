@@ -13,8 +13,8 @@ defmodule DigestRequest.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {DigestRequest.Application, []}
+      extra_applications: [:logger, :crypto, :inets],
+      mod: {DigexRequest.Application, []}
     ]
   end
 

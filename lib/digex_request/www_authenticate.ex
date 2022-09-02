@@ -1,4 +1,4 @@
-defmodule DigestRequest.WWWAuthenticate do
+defmodule DigexRequest.WWWAuthenticate do
   @moduledoc false
 
   @quoted_regex ~r/(\w+)="(.*?)"/i
@@ -56,7 +56,7 @@ defmodule DigestRequest.WWWAuthenticate do
       {key, value}, acc when key in ["realm", "nonce", "opaque", "qop"] ->
         Map.put(acc, String.to_atom(key), value)
 
-      {key, value}, acc when key in ["stale", "userhash"] and value == "true" ->
+      {key, value}, acc when key in ["stale", "userhash"] and value in ["true", "TRUE"] ->
         Map.put(acc, String.to_atom(key), true)
 
       {"algorithm", algo}, acc when algo in @valid_algorithms ->
