@@ -22,13 +22,7 @@ defmodule DigexRequest.WwwAuthenticateTest do
       realm: "digest realm"
     }
 
-    assert {:ok, ^expected_www_authenticate_1} = WWWAuthenticate.parse(header_1)
-    assert {:ok, ^expected_www_authenticate_2} = WWWAuthenticate.parse(header_2)
-  end
-
-  test "parse invalid www-authenticate header" do
-    header = "Basic realm=\"Basic realm\""
-
-    assert :error = WWWAuthenticate.parse(header)
+    assert ^expected_www_authenticate_1 = WWWAuthenticate.parse(header_1)
+    assert ^expected_www_authenticate_2 = WWWAuthenticate.parse(header_2)
   end
 end

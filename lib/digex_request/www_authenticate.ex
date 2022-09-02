@@ -28,20 +28,13 @@ defmodule DigexRequest.WWWAuthenticate do
             charset: "UTF-8",
             userhash: false
 
-  @spec parse(String.t()) :: {:ok, t()} | :error
+  @spec parse(String.t()) :: t()
   def parse(header) do
-    case :binary.match(header, "Digest") do
-      {idx, _} ->
-        header = String.slice(header, (idx + 7)..-1)
-
-        header
-        |> parse_header(@unquoted_regex)
-        |> Map.merge(parse_header(header, @quoted_regex))
-        |> then(&{:ok, map_to_struct(&1)})
-
-      _ ->
-        :error
-    end
+    header
+    |> String.slice(7..-1)
+    |> parse_header(@unquoted_regex)
+    |> Map.merge(parse_header(header, @quoted_regex))
+    |> map_to_struct()
   end
 
   defp parse_header(header, regex) do

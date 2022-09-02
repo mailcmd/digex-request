@@ -18,15 +18,14 @@ defmodule DigexRequest.AuthorizationTest do
         "Digest realm=\"http-auth@example.org\", qop=\"auth\", algorithm=MD5, nonce=\"7ypf/xlj9XXwfDPEoM4URrv/xwf94BcCAzFZH4GiTo0v\",
         opaque=\"FQhe/qaU925kfnzjCev0ciny7QMkPqMAFRtzCUYo5tdS\""
 
-      {:ok, www_athenticate_1} = WWWAuthenticate.parse(www_header_1)
-      {:ok, www_athenticate_2} = WWWAuthenticate.parse(www_header_2)
-
       auth_1 =
-        Authorization.new(www_athenticate_1)
+        WWWAuthenticate.parse(www_header_1)
+        |> Authorization.new()
         |> Map.put(:cnonce, "f2/wE4q74E6zIJEtWaHKaf5wv/H5QzzpXusqGemxURZJ")
 
       auth_2 =
-        Authorization.new(www_athenticate_2)
+        WWWAuthenticate.parse(www_header_2)
+        |> Authorization.new()
         |> Map.put(:cnonce, "f2/wE4q74E6zIJEtWaHKaf5wv/H5QzzpXusqGemxURZJ")
 
       req = %DigexRequest{
@@ -36,11 +35,7 @@ defmodule DigexRequest.AuthorizationTest do
         password: "Circle of Life"
       }
 
-      %{
-        auth1: auth_1,
-        auth2: auth_2,
-        req: req
-      }
+      %{auth1: auth_1, auth2: auth_2, req: req}
     end
 
     test "calculate response", %{auth1: auth_1, auth2: auth_2, req: req} do
