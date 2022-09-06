@@ -5,13 +5,15 @@ defmodule DigexRequest.Authorization do
 
   alias __MODULE__
 
+  @type nil_string :: String.t() | nil
+
   @type t :: %__MODULE__{
-          response: String.t(),
-          username: String.t(),
-          realm: String.t(),
-          uri: String.t(),
-          qop: String.t(),
-          opaque: String.t(),
+          response: nil_string(),
+          username: nil_string(),
+          realm: nil_string(),
+          uri: nil_string(),
+          qop: nil_string(),
+          opaque: nil_string(),
           nonce: String.t(),
           cnonce: String.t(),
           nc: non_neg_integer(),

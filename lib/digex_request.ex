@@ -7,11 +7,11 @@ defmodule DigexRequest do
   @type t :: %__MODULE__{
           method: method(),
           url: String.t(),
-          body: any(),
+          body: iodata(),
           username: String.t(),
           password: String.t(),
           headers: headers(),
-          authorization: DigexRequest.Authorization.t()
+          authorization: DigexRequest.Authorization.t() | nil
         }
 
   defstruct method: :get,
@@ -120,7 +120,7 @@ defmodule DigexRequest do
     end
   end
 
-  @spec new(method(), String.t(), String.t(), String.t(), headers(), any()) :: any()
+  @spec new(method(), String.t(), String.t(), String.t(), headers(), iodata() | nil) :: DigexRequest.t()
   def new(method, url, username, password, headers \\ [], body \\ nil) do
     %__MODULE__{
       method: method,
