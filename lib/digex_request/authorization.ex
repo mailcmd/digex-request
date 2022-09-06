@@ -31,9 +31,9 @@ defmodule DigexRequest.Authorization do
             userhash: false,
             algorithm: :MD5
 
-  @spec new(DigexRequest.WWWAuthenticate.t()) :: t()
+  @spec new(DigexRequest.WWWAuthenticate.t()) :: DigexRequest.Authorization.t()
   def new(%DigexRequest.WWWAuthenticate{} = wwwAuthenticate) do
-    %Authorization{
+    %__MODULE__{
       realm: wwwAuthenticate.realm,
       qop: wwwAuthenticate.qop,
       userhash: wwwAuthenticate.userhash,
@@ -56,6 +56,7 @@ defmodule DigexRequest.Authorization do
     computeResponse(authorization, dr)
   end
 
+  @spec build(DigexRequest.Authorization.t()) :: String.t()
   def build(%__MODULE__{} = auth) do
     auth
     |> Map.from_struct()
