@@ -1,5 +1,5 @@
 defmodule DigexRequest do
-  @moduledoc false
+  @moduledoc "README.md" |> File.read!()
 
   @type method :: :get | :head | :post | :delete | :put | :patch | :options | :trace
   @type headers() :: [{header_name :: String.t(), header_value :: String.t()}]
@@ -120,7 +120,8 @@ defmodule DigexRequest do
     end
   end
 
-  @spec new(method(), String.t(), String.t(), String.t(), headers(), iodata() | nil) :: DigexRequest.t()
+  @spec new(method(), String.t(), String.t(), String.t(), headers(), iodata() | nil) ::
+          DigexRequest.t()
   def new(method, url, username, password, headers \\ [], body \\ nil) do
     %__MODULE__{
       method: method,
