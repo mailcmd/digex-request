@@ -28,7 +28,8 @@ defmodule DigexRequest.MixProject do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false},
+      {:bypass, "~> 2.1", only: :test}
     ]
   end
 end
