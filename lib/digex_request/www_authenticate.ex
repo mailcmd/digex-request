@@ -1,5 +1,7 @@
 defmodule DigexRequest.WWWAuthenticate do
-  @moduledoc false
+  @moduledoc """
+  The representation of a digest www-authenticate header
+  """
 
   @quoted_regex ~r/(\w+)="(.*?)"/i
   @unquoted_regex ~r/(\w+)=([^" ,]*)/i

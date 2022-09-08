@@ -7,7 +7,15 @@ defmodule DigexRequest.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "DigexRequest",
+      source_url: "https://github.com/gBillal/digex-request",
+      docs: [
+        main: "DigexRequest",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -19,6 +27,8 @@ defmodule DigexRequest.MixProject do
   end
 
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
+    ]
   end
 end

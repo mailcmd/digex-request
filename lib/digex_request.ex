@@ -120,6 +120,9 @@ defmodule DigexRequest do
     end
   end
 
+  @doc """
+  Build a digest request to be sent
+  """
   @spec new(method(), String.t(), String.t(), String.t(), headers(), iodata() | nil) ::
           DigexRequest.t()
   def new(method, url, username, password, headers \\ [], body \\ nil) do

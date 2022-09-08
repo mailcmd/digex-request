@@ -1,5 +1,7 @@
 defmodule DigexRequest.Response do
-  @moduledoc false
+  @moduledoc """
+  A response to a request
+  """
 
   @type t :: %__MODULE__{
           status: non_neg_integer(),
