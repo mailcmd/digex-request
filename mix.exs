@@ -1,20 +1,32 @@
 defmodule DigexRequest.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+  @repo "https://github.com/gBillal/digex-request"
+
   def project do
     [
       app: :digex_request,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
 
       # Docs
       name: "DigexRequest",
-      source_url: "https://github.com/gBillal/digex-request",
+      source_url: @repo,
+      description: "Digest authentication implementation for Elixir",
       docs: [
         main: "DigexRequest",
+        source_ref: "v#{@version}",
+        source_url: @repo,
         extras: ["README.md"]
+      ],
+      package: [
+        licenses: ["MIT"],
+        links: %{
+          "Github" => "https://github.com/gBillal/digex-request"
+        }
       ]
     ]
   end
