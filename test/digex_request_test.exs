@@ -23,7 +23,10 @@ defmodule DigexRequestTest do
       case Conn.get_req_header(conn, "authorization") do
         [] ->
           conn
-          |> Conn.put_resp_header("www-authenticate", "Digest realm=\"realm\", nonce=\"1fd54f4d5f5d4sfdsf\", qop=\"auth\"")
+          |> Conn.put_resp_header(
+            "www-authenticate",
+            "Digest realm=\"realm\", nonce=\"1fd54f4d5f5d4sfdsf\", qop=\"auth\""
+          )
           |> Conn.resp(401, "")
 
         [authorization] ->

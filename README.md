@@ -10,7 +10,7 @@ by adding `digex_request` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:digex_request, "~> 0.1.0"}
+    {:digex_request, "~> 0.2.0"}
   ]
 end
 ```
@@ -32,7 +32,9 @@ DigexRequest.new(:get, "http://www.example.com", "username", "password") |> Dige
 ```
 
 By default the http client used is `:httpc`, you can override this behaviour by implementing the 
-`handle_request/4` function.
+`handle_request/5` function.
+
+`request` function accept a keyword list that will be passed as it is to the `handle_request/5`, this is useful to configure some options like `timeout`.
 
 For example if we want to use Finch to send the request
 
@@ -41,7 +43,7 @@ def DigexClient do
   use DigexRequest
 
   @impl DigexRequest
-  def handle_request(method, url, headers, body) do
+  def handle_request(method, url, headers, body, _opts) do
     case Finch.build(method, url, headers, body) |> Finch.request(MyFinch) do
       {:ok, response} ->
         {:ok, 

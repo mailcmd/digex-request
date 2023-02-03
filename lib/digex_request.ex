@@ -4,6 +4,8 @@ defmodule DigexRequest do
   @type method :: :get | :head | :post | :delete | :put | :patch | :options | :trace
   @type headers() :: [{header_name :: String.t(), header_value :: String.t()}]
 
+  @type options :: Keyword.t()
+
   @type t :: %__MODULE__{
           method: method(),
           url: String.t(),
@@ -27,10 +29,10 @@ defmodule DigexRequest do
 
   The default implementation use the `httpc` http client to send requests.
   """
-  @callback handle_request(method(), String.t(), headers(), any()) ::
+  @callback handle_request(method(), String.t(), headers(), any(), options()) ::
               {:ok, DigexRequest.Response.t()} | {:error, any()}
 
-  @optional_callbacks handle_request: 4
+  @optional_callbacks handle_request: 5
 
   defmacro __using__(_opts) do
     quote do
@@ -38,22 +40,27 @@ defmodule DigexRequest do
 
       @behaviour DigexRequest
 
-      def request(%DigexRequest{} = req) do
-        with {:ok, %{status: 401} = resp, req} <- do_request(req) do
+      @spec request(DigexRequest.t(), DigexRequest.options()) ::
+              {:ok, DigexRequest.Response.t(), DigexRequest.t()} | {:error, term()}
+      def request(%DigexRequest{} = req, opts \\ []) do
+        with {:ok, %{status: 401} = resp, req} <- do_request(req, opts) do
           case www_digest_header(resp.headers) do
             [] ->
               {:ok, resp, req}
 
             [header | _tail] ->
-              do_request(%DigexRequest{
-                req
-                | authorization: build_authorization_from_header(header)
-              })
+              do_request(
+                %DigexRequest{
+                  req
+                  | authorization: build_authorization_from_header(header)
+                },
+                opts
+              )
           end
         end
       end
 
-      def handle_request(method, url, headers, body) do
+      def handle_request(method, url, headers, body, opts) do
         Application.ensure_started(:inets)
 
         headers = Enum.map(headers, fn {k, v} -> {to_charlist(k), to_charlist(v)} end)
@@ -73,10 +80,10 @@ defmodule DigexRequest do
         end
       end
 
-      defp do_request(%DigexRequest{} = req) do
+      defp do_request(%DigexRequest{} = req, opts) do
         req = build_headers(req)
 
-        case handle_request(req.method, req.url, req.headers, req.body) do
+        case handle_request(req.method, req.url, req.headers, req.body, opts) do
           {:ok, resp} -> {:ok, resp, req}
           error -> error
         end
@@ -116,7 +123,7 @@ defmodule DigexRequest do
         end)
       end
 
-      defoverridable handle_request: 4
+      defoverridable handle_request: 5
     end
   end
 
