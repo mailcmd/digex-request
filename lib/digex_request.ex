@@ -68,7 +68,7 @@ defmodule DigexRequest do
         request =
           if method == :get, do: {url, headers}, else: {url, headers, '', to_charlist(body)}
 
-        with {:ok, {status, headers, body}} <- :httpc.request(method, request, [], []) do
+        with {:ok, {status, headers, body}} <- :httpc.request(method, request, opts, []) do
           headers = Enum.map(headers, fn {k, v} -> {to_string(k), to_string(v)} end)
 
           {:ok,
