@@ -33,7 +33,7 @@ defmodule DigexRequest.WWWAuthenticate do
   @spec parse(String.t()) :: t()
   def parse(header) do
     header
-    |> String.slice(7..-1)
+    |> String.slice(7..-1//1)
     |> parse_header(@unquoted_regex)
     |> Map.merge(parse_header(header, @quoted_regex))
     |> map_to_struct()
